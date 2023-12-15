@@ -2,9 +2,10 @@ import logging
 from flask import Flask, render_template, redirect, url_for, request, flash, session
 from flask_bcrypt import Bcrypt
 import mysql.connector
+import config
 
 app = Flask(__name__)
-app.secret_key = 'Amm0$3cr3+k3y'  # Change this to a random secret key
+app.secret_key = config.secretkey  # Change this to a random secret key
 bcrypt = Bcrypt()
 
 
@@ -14,13 +15,7 @@ handler.setLevel(logging.ERROR)
 app.logger.addHandler(handler)
 
 # Connect to MySQL
-db_config = {
-    'host': 'localhost',
-    'user': 'ammo',
-    'password': 'Tendre143?',
-    'database': 'user',
-    'port': '3306',
-}
+db_config = config.dbconfig
 
 # Using a context manager for database connection and cursor
 def execute_query(query, data=None, fetchone=False, fetchall=False):
