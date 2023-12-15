@@ -4,6 +4,8 @@ from flask_bcrypt import Bcrypt
 import mysql.connector
 import config
 
+from routes.home_routes import home_bp
+
 app = Flask(__name__)
 app.secret_key = config.secretkey  # Change this to a random secret key
 bcrypt = Bcrypt()
@@ -41,10 +43,6 @@ execute_query('''
         password VARCHAR(255) NOT NULL
     )
 ''')
-
-@app.route('/')
-def home():
-    return render_template('home.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
