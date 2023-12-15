@@ -1,0 +1,204 @@
+Exception on /register [POST]
+Traceback (most recent call last):
+  File "/home/ammo/public/app.py", line 30, in execute_query
+    connection.commit()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1263, in commit
+    self._execute_query("COMMIT")
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1281, in _execute_query
+    self.handle_unread_result()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1523, in handle_unread_result
+    raise InternalError("Unread result found")
+mysql.connector.errors.InternalError: Unread result found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/ammo/public/app.py", line 74, in register
+    existing_user = execute_query('SELECT * FROM users WHERE username=%s', (username,), fetchone=True)
+  File "/home/ammo/public/app.py", line 35, in execute_query
+    return None
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/abstracts.py", line 1621, in __exit__
+    self.close()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/cursor.py", line 429, in close
+    self._connection.handle_unread_result()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1523, in handle_unread_result
+    raise InternalError("Unread result found")
+mysql.connector.errors.InternalError: Unread result found
+Exception on /login [POST]
+Traceback (most recent call last):
+  File "/home/ammo/public/app.py", line 30, in execute_query
+    connection.commit()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1263, in commit
+    self._execute_query("COMMIT")
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1281, in _execute_query
+    self.handle_unread_result()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1523, in handle_unread_result
+    raise InternalError("Unread result found")
+mysql.connector.errors.InternalError: Unread result found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/ammo/public/app.py", line 57, in login
+    user = execute_query('SELECT * FROM users WHERE username=%s', (username,), fetchone=True)
+  File "/home/ammo/public/app.py", line 35, in execute_query
+    return None
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/abstracts.py", line 1621, in __exit__
+    self.close()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/cursor.py", line 429, in close
+    self._connection.handle_unread_result()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1523, in handle_unread_result
+    raise InternalError("Unread result found")
+mysql.connector.errors.InternalError: Unread result found
+Exception on /register [POST]
+Traceback (most recent call last):
+  File "/home/ammo/public/app.py", line 30, in execute_query
+    connection.commit()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1263, in commit
+    self._execute_query("COMMIT")
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1281, in _execute_query
+    self.handle_unread_result()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1523, in handle_unread_result
+    raise InternalError("Unread result found")
+mysql.connector.errors.InternalError: Unread result found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/ammo/public/app.py", line 75, in register
+    existing_user = execute_query('SELECT * FROM users WHERE username=%s', (username,), fetchone=True)
+  File "/home/ammo/public/app.py", line 35, in execute_query
+    return None
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/abstracts.py", line 1621, in __exit__
+    self.close()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/cursor.py", line 429, in close
+    self._connection.handle_unread_result()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1523, in handle_unread_result
+    raise InternalError("Unread result found")
+mysql.connector.errors.InternalError: Unread result found
+Exception on /register [POST]
+Traceback (most recent call last):
+  File "/home/ammo/public/app.py", line 30, in execute_query
+    connection.commit()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1263, in commit
+    self._execute_query("COMMIT")
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1281, in _execute_query
+    self.handle_unread_result()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1523, in handle_unread_result
+    raise InternalError("Unread result found")
+mysql.connector.errors.InternalError: Unread result found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/ammo/public/app.py", line 75, in register
+    existing_user = execute_query('SELECT * FROM users WHERE username=%s', (username,), fetchone=True)
+  File "/home/ammo/public/app.py", line 35, in execute_query
+    return None
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/abstracts.py", line 1621, in __exit__
+    self.close()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/cursor.py", line 429, in close
+    self._connection.handle_unread_result()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1523, in handle_unread_result
+    raise InternalError("Unread result found")
+mysql.connector.errors.InternalError: Unread result found
+Exception on /register [POST]
+Traceback (most recent call last):
+  File "/home/ammo/public/app.py", line 30, in execute_query
+    connection.commit()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1263, in commit
+    self._execute_query("COMMIT")
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1281, in _execute_query
+    self.handle_unread_result()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1523, in handle_unread_result
+    raise InternalError("Unread result found")
+mysql.connector.errors.InternalError: Unread result found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/ammo/public/app.py", line 75, in register
+    existing_user = execute_query('SELECT * FROM users WHERE username=%s', (username,), fetchone=True)
+  File "/home/ammo/public/app.py", line 35, in execute_query
+    return None
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/abstracts.py", line 1621, in __exit__
+    self.close()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/cursor.py", line 429, in close
+    self._connection.handle_unread_result()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1523, in handle_unread_result
+    raise InternalError("Unread result found")
+mysql.connector.errors.InternalError: Unread result found
+Exception on /register [POST]
+Traceback (most recent call last):
+  File "/home/ammo/public/app.py", line 30, in execute_query
+    connection.commit()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1263, in commit
+    self._execute_query("COMMIT")
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1281, in _execute_query
+    self.handle_unread_result()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1523, in handle_unread_result
+    raise InternalError("Unread result found")
+mysql.connector.errors.InternalError: Unread result found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/ammo/public/app.py", line 75, in register
+    existing_user = execute_query('SELECT * FROM users WHERE username=%s', (username,), fetchone=True)
+  File "/home/ammo/public/app.py", line 35, in execute_query
+    return None
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/abstracts.py", line 1621, in __exit__
+    self.close()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/cursor.py", line 429, in close
+    self._connection.handle_unread_result()
+  File "/usr/local/lib/python3.8/dist-packages/mysql/connector/connection.py", line 1523, in handle_unread_result
+    raise InternalError("Unread result found")
+mysql.connector.errors.InternalError: Unread result found
