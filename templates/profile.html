@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <!-- Include any additional CSS or styling libraries here -->
+</head>
+<body>
+    <h1>User Profile</h1>
+    {% if current_user.is_authenticated %}
+    <p>Welcome, {{ user.username }}!</p>
+
+    <ul>
+        <li><strong>User ID:</strong> {{ user.id }}</li>
+        <li><strong>Username:</strong> {{ user.username }}</li>
+        <!-- Add more user details here as needed -->
+    </ul>
+
+    <a href="{{ url_for('home') }}">Back to Home</a>
+    
+    <a href="{{ url_for('logout') }}">Logout</a>
+    {% endif %}
+
+
+    <!-- Include any additional HTML elements or content as needed -->
+</body>
+</html>
