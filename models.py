@@ -1,7 +1,8 @@
+# models.py
 import mysql.connector
 import config
 from flask_login import UserMixin
-from flask_bcrypt import Bcrypt  # Import Bcrypt for password hashing
+from flask_bcrypt import Bcrypt
 
 db_config = config.dbconfig
 bcrypt = Bcrypt()
@@ -21,10 +22,10 @@ def execute_query(query, data=None, fetchone=False, fetchall=False, commit=False
             return None
 
 class User(UserMixin):
-    def __init__(self, user_id, username, password=None):
+    def __init__(self, user_id, username, password_hash=None):
         self.id = user_id
         self.username = username
-        self.password = password
+        self.password_hash = password_hash
 
     @staticmethod
     def get(user_id):
@@ -32,7 +33,7 @@ class User(UserMixin):
         result = execute_query(query, (user_id,), fetchone=True)
 
         if result:
-            user = User(user_id=result['id'], username=result['username'])
+            user = User(user_id=result['id'], username=result['username'], password_hash=result['password'])
             return user
         else:
             return None
@@ -43,23 +44,23 @@ class User(UserMixin):
         result = execute_query(query, (username,), fetchone=True)
 
         if result:
-            user = User(user_id=result['id'], username=result['username'], password=result['password'])
+            user = User(user_id=result['id'], username=result['username'], password_hash=result['password'])
             return user
         else:
             return None
 
     def check_password(self, password):
-        return bcrypt.check_password_hash(self.password, password)
+        return bcrypt.check_password_hash(self.password_hash, password)
 
     def set_password(self, password):
-        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
+        self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
 
     def save(self):
         if not self.id:
             # Insert a new user
             query = 'INSERT INTO users (username, password) VALUES (%s, %s)'
-            execute_query(query, (self.username, self.password), commit=True)
+            execute_query(query, (self.username, self.password_hash), commit=True)
         else:
             # Update an existing user
             query = 'UPDATE users SET username=%s, password=%s WHERE id=%s'
-            execute_query(query, (self.username, self.password, self.id), commit=True)
+            execute_query(query, (self.username, self.password_hash, self.id), commit=True)

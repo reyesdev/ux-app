@@ -1,21 +1,18 @@
+# app.py
 import logging
-from flask import Flask, render_template, redirect, url_for, request, flash
-from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from models import User
+from flask import Flask
+from models import execute_query
 import mysql.connector
 import config
+from routes.extensions import login_manager
+from routes.auth_routes import init_auth_routes
 
 app = Flask(__name__)
-app.secret_key = config.secretkey  # Change this to a random secret key
-login_manager = LoginManager(app)
+app.secret_key = config.secretkey
 
-# Load user from the database
-@login_manager.user_loader
-def load_user(user_id):
-    return User.get(user_id)
-
-# Configure the login view
-login_manager.login_view = 'login'
+# Initialize the login manager
+login_manager.login_view = 'auth.login'  # Set the login view
+login_manager.init_app(app)
 
 # Configure the logging to a file
 handler = logging.FileHandler('error.log')
@@ -31,6 +28,7 @@ def execute_query(query, data=None, fetchone=False, fetchall=False, commit=False
         with connection.cursor(dictionary=True) as cursor:
             cursor.execute(query, data)
 
+            # Commit if specified
             if commit:
                 connection.commit()
 
@@ -49,53 +47,8 @@ execute_query('''
     )
 ''', commit=True)
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        user = User.get_by_username(username)
-
-        if user and user.check_password(password):
-            login_user(user)
-            flash('Login successful!', 'success')
-            return redirect(url_for('profile'))
-        else:
-            flash('Login unsuccessful. Please check your username and password.', 'danger')
-
-    return render_template('login.html')
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        existing_user = User.get_by_username(username)
-        if existing_user:
-            flash('Username already taken. Please choose another.', 'danger')
-        else:
-            new_user = User(username=username)
-            new_user.set_password(password)
-            new_user.save()
-
-            flash('Registration successful! You can now log in.', 'success')
-            return redirect(url_for('login'))
-
-    return render_template('register.html')
-
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    flash('You have been logged out.', 'info')
-    return redirect(url_for('home'))
-
-@app.route('/profile')
-@login_required
-def profile():
-    return render_template('profile.html', user=current_user)
+# Initialize the auth routes with the app object
+init_auth_routes(app)
 
 @app.route('/')
 def home():
