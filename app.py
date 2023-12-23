@@ -6,9 +6,13 @@ import mysql.connector
 import config
 from routes.extensions import login_manager
 from routes.auth_routes import init_auth_routes
+from routes.upload_routes import init_upload_routes
 
 app = Flask(__name__)
 app.secret_key = config.secretkey
+
+# Maximum content length to handle larger file uploads
+app.config['MAX_CONTENT_LENGTH'] = 32 * 1024 * 1024  # 32 megabytes
 
 # Initialize the login manager
 login_manager.login_view = 'auth.login'  # Set the login view
@@ -49,6 +53,7 @@ execute_query('''
 
 # Initialize the auth routes with the app object
 init_auth_routes(app)
+init_upload_routes(app)
 
 @app.route('/')
 def home():

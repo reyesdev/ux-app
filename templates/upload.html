@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX Review</title>
+</head>
+<body>
+    <h1>UX Review</h1>
+    
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="imageUpload">Upload Image:</label>
+        <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
+        <br>
+        <button type="submit">Upload Image</button>
+    </form>
+
+    {% if result_path %}
+        <p>Image Path: {{ result_path }}</p>
+        <p>Feedback: {{ response_post }}</p>
+        <img src="{{ result_path }}" alt="Uploaded Image">
+    {% endif %}
+
+</body>
+</html>
