@@ -1,13 +1,22 @@
+# app.py
 import logging
-from flask import Flask, render_template, redirect, url_for, request, flash, session
-from flask_bcrypt import Bcrypt
+from flask import Flask
+from models import execute_query
 import mysql.connector
 import config
+from routes.extensions import login_manager
+from routes.auth_routes import init_auth_routes
+from routes.upload_routes import init_upload_routes
 
 app = Flask(__name__)
-app.secret_key = config.secretkey  # Change this to a random secret key
-bcrypt = Bcrypt()
+app.secret_key = config.secretkey
 
+# Maximum content length to handle larger file uploads
+app.config['MAX_CONTENT_LENGTH'] = 32 * 1024 * 1024  # 32 megabytes
+
+# Initialize the login manager
+login_manager.login_view = 'auth.login'  # Set the login view
+login_manager.init_app(app)
 
 # Configure the logging to a file
 handler = logging.FileHandler('error.log')
@@ -18,13 +27,13 @@ app.logger.addHandler(handler)
 db_config = config.dbconfig
 
 # Using a context manager for database connection and cursor
-def execute_query(query, data=None, fetchone=False, fetchall=False):
+def execute_query(query, data=None, fetchone=False, fetchall=False, commit=False):
     with mysql.connector.connect(**db_config) as connection:
         with connection.cursor(dictionary=True) as cursor:
             cursor.execute(query, data)
 
-            # Only commit for write operations
-            if query.strip().split()[0].upper() in ["INSERT", "UPDATE", "DELETE"]:
+            # Commit if specified
+            if commit:
                 connection.commit()
 
             if fetchone:
@@ -40,57 +49,15 @@ execute_query('''
         username VARCHAR(255) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL
     )
-''')
+''', commit=True)
+
+# Initialize the auth routes with the app object
+init_auth_routes(app)
+init_upload_routes(app)
 
 @app.route('/')
 def home():
-    return render_template('home.html')
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        user = execute_query('SELECT * FROM users WHERE username=%s', (username,), fetchone=True)
-
-        if user and bcrypt.check_password_hash(user['password'], password):
-            session['username'] = username
-            flash('Login successful!', 'success')
-            return redirect(url_for('home'))
-        else:
-            flash('Login unsuccessful. Please check your username and password.', 'danger')
-
-    return render_template('login.html')
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        # Validate if the username is already taken
-        existing_user = execute_query('SELECT * FROM users WHERE username=%s', (username,), fetchone=True)
-        if existing_user:
-            flash('Username already taken. Please choose another.', 'danger')
-        else:
-            # Hash the password before storing it
-            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-
-            # Insert the new user into the 'users' table
-            execute_query('INSERT INTO users (username, password) VALUES (%s, %s)', (username, hashed_password))
-
-            flash('Registration successful! You can now log in.', 'success')
-            return redirect(url_for('login'))
-
-    return render_template('register.html')
-
-@app.route('/logout')
-def logout():
-    session.pop('username', None)
-    flash('You have been logged out.', 'info')
-    return redirect(url_for('home'))
+    return 'Home Page'
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)

@@ -3,3 +3,5 @@ error.log
 nohup.out
 output.log
 config.py
+.vscode/settings.json
+uploads/*
